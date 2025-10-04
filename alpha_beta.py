@@ -74,7 +74,7 @@ source = input("Enter the source node: ")
 try:
     depth = int(input("Enter the depth to search: "))
 except ValueError:
-    depth = 3  # default for 3-level tree
+    depth = 3  # default for 3-level tree...change it if you want to add 2 level tree
 
 best_score = minimax_alpha_beta(source, depth, float('-inf'), float('inf'), True)
 print(f"The best score is: {best_score}")
