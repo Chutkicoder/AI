@@ -1,5 +1,7 @@
-from queue import Queue
-adj_list={
+from collections import deque
+
+# Adjacency list
+adj_list = {
     'A':['B','D'],
     'B':['C','F'],
     'C':['E','G','H'],
@@ -9,34 +11,28 @@ adj_list={
     'D':['F'],
     'H':['A']
 }
-visited={}
-level={}
-parent={}
-bfs_traversal=[]
-queue=Queue()
-for node in adj_list.keys():
-    visited[node]=False
-    parent[node]=None
-    level[node]=-1
-source="A"
-visited[source]=True
-level[source]=0
-queue.put(source)
-while not queue.empty():
-    u=queue.get()
-    bfs_traversal.append(u)
-    for v in adj_list[u]:
-        if not visited[v]:
-            visited[v]=True
-            parent[v]=u
-            level[v]=level[u]+1
-            queue.put(v)
-print("BFS traversal: ",bfs_traversal)
 
-node="E"
-path=[]
-while node is not None:
-    path.append(node)
-    node=parent[node]
-path.reverse()
-print("Shortest path is: ",path)
+def shortest_path_bfs(graph, start, goal):
+    visited = set()
+    queue = deque([(start, [start])])  # store (node, path_so_far)
+
+    while queue:
+        node, path = queue.popleft()
+        if node == goal:
+            return path
+        if node not in visited:
+            visited.add(node)
+            for neighbor in graph.get(node, []):
+                if neighbor not in visited:
+                    queue.append((neighbor, path + [neighbor]))
+    return None
+
+# ---- Input ----
+source = input("Enter source node: ")
+destination = input("Enter destination node: ")
+
+path = shortest_path_bfs(adj_list, source, destination)
+if path:
+    print("Shortest path:", " -> ".join(path))
+else:
+    print("No path exists between", source, "and", destination)
