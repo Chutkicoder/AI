@@ -28,7 +28,7 @@ while not queue.empty():
     for v in adj_list[u]:
         if not visited[v]:
             visited[v]=True
-             parent[v]=u
+            parent[v]=u
             level[v]=level[u]+1
             queue.put(v)
 print("BFS traversal: ",bfs_traversal)
